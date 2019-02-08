@@ -57,3 +57,7 @@ variable "max_image_count" {
   description = "How many Docker Image versions AWS ECR will store"
   default     = "7"
 }
+
+variable "ecr_name" {
+  description = "The Name of the ecr repository"
+}
