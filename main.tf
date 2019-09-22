@@ -24,7 +24,7 @@ resource "aws_ecr_repository" "default" {
 }
 
 resource "aws_ecr_lifecycle_policy" "default" {
-  count      = var.enabled_ecr  ? 1 : 0
+  count      = var.enabled_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default.*.name)
 
   policy = <<EOF
@@ -87,32 +87,32 @@ data "aws_iam_policy_document" "resource_readonly_access" {
 }
 
 data "aws_iam_policy_document" "resource_full_access" {
-    statement {
-      sid = "FullAccess"
-      effect = "Allow"
+  statement {
+    sid = "FullAccess"
+    effect = "Allow"
 
-      principals {
-        type = "AWS"
+    principals {
+      type = "AWS"
 
-        identifiers = var.principals_full_access
-      }
-
-      actions = [
-        "ecr:GetAuthorizationToken",
-        "ecr:InitiateLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:CompleteLayerUpload",
-        "ecr:PutImage",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:GetRepositoryPolicy",
-        "ecr:DescribeRepositories",
-        "ecr:ListImages",
-        "ecr:DescribeImages",
-        "ecr:BatchGetImage",
-      ]
+      identifiers = var.principals_full_access
     }
+
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:PutImage",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryPolicy",
+      "ecr:DescribeRepositories",
+      "ecr:ListImages",
+      "ecr:DescribeImages",
+      "ecr:BatchGetImage",
+    ]
   }
+}
 
 
 data "aws_iam_policy_document" "resource" {
@@ -121,8 +121,8 @@ data "aws_iam_policy_document" "resource" {
 }
 
 resource "aws_ecr_repository_policy" "default" {
-  count      = local.ecr_need_policy  && var.enabled_ecr  ? 1 : 0
+  count = local.ecr_need_policy && var.enabled_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default.*.name)
-  policy    = join("", data.aws_iam_policy_document.resource.*.json)
+  policy = join("", data.aws_iam_policy_document.resource.*.json)
 }
 

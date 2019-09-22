@@ -1,5 +1,5 @@
 // Managed By : CloudDrove
-// Description : This Terratest is used to test the Terraform VPC module.
+// Description : This Terratest is used to test the Terraform ECR module.
 // Copyright @ CloudDrove. All Right Reserved.
 package test
 
@@ -29,6 +29,6 @@ func Test(t *testing.T) {
 	Tags := terraform.OutputMap(t, terraformOptions, "tags")
 
 	// Check that we get back the outputs that we expect
-	assert.Equal(t, "test-alb-clouddrove", Tags["Name"])
-	assert.Contains(t, Arn, "arn:aws:elasticloadbalancing")
+	assert.Equal(t, "test-ecr-clouddrove", Tags["Name"])
+	assert.Contains(t, Arn, "arn:aws:ecr")
 }

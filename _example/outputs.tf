@@ -1,6 +1,6 @@
 output "arn" {
-  value       = module.ecr.*.registry_id
-  description = "The ARN suffix of the ALB"
+  value       = module.ecr.*.arn
+  description = "Registry name."
 }
 
 output "tags" {

@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "ecr" {
-  source = "./../"
+  source      = "./../"
   name        = "ecr"
   application = "clouddrove"
   environment = "test"
