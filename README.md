@@ -85,6 +85,33 @@ Here is an example of how you can use this module in your inventory structure:
 
 
 
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| application | Application (e.g. `cd` or `clouddrove`). | string | `` | no |
+| attributes | Additional attributes (e.g. `1`). | list | `<list>` | no |
+| delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | string | `-` | no |
+| enabled_ecr | Set to false to prevent the module from creating any resources. | bool | `true` | no |
+| environment | Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
+| label_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
+| max_image_count | How many Docker Image versions AWS ECR will store. | number | `7` | no |
+| name | Name  (e.g. `app` or `cluster`). | string | `` | no |
+| principals_full_access | Principal ARN to provide with full access to the ECR. | list | `<list>` | no |
+| principals_readonly_access | Principal ARN to provide with readonly access to the ECR. | list | `<list>` | no |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | map | `<map>` | no |
+| use_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | bool | `true` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| arn | Registry ARN. |
+| registry_id | Registry ID. |
+| registry_url | Registry URL. |
+| repository_name | Registry name. |
+| tags | A mapping of tags to assign to the resource. |
+
 
 
 
