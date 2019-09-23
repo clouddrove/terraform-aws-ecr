@@ -1,3 +1,7 @@
+## Managed By : CloudDrove
+## Description : This Script is used to create Aws ECR repository and policy.
+## Copyright @ CloudDrove. All Right Reserved.
+
 locals {
   principals_readonly_access_non_empty = length(var.principals_readonly_access) > 0 ? true : false
   principals_full_access_non_empty     = length(var.principals_full_access) > 0 ? true : false
@@ -17,6 +21,8 @@ module "labels" {
   label_order = var.label_order
 }
 
+# Module      : ECR  REPOSITORY
+# Description : Provides an Elastic Container Registry Repository.
 resource "aws_ecr_repository" "default" {
   count = var.enabled_ecr ? 1 : 0
   name  = module.labels.id
@@ -64,7 +70,7 @@ data "aws_iam_policy_document" "empty" {
 
 data "aws_iam_policy_document" "resource_readonly_access" {
   statement {
-    sid = "ReadonlyAccess"
+    sid    = "ReadonlyAccess"
     effect = "Allow"
 
     principals {
@@ -88,7 +94,7 @@ data "aws_iam_policy_document" "resource_readonly_access" {
 
 data "aws_iam_policy_document" "resource_full_access" {
   statement {
-    sid = "FullAccess"
+    sid    = "FullAccess"
     effect = "Allow"
 
     principals {
@@ -116,13 +122,15 @@ data "aws_iam_policy_document" "resource_full_access" {
 
 
 data "aws_iam_policy_document" "resource" {
-  source_json = local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
+  source_json   = local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
   override_json = local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
 }
 
+# Module      : ECR  REPOSITORY
+# Description : Provides an Elastic Container Registry Repository Policy.
 resource "aws_ecr_repository_policy" "default" {
-  count = local.ecr_need_policy && var.enabled_ecr ? 1 : 0
+  count      = local.ecr_need_policy && var.enabled_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default.*.name)
-  policy = join("", data.aws_iam_policy_document.resource.*.json)
+  policy     = join("", data.aws_iam_policy_document.resource.*.json)
 }
 
