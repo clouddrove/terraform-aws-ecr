@@ -71,13 +71,13 @@ This module has a few dependencies:
 ### Simple Example
 Here is an example of how you can use this module in your inventory structure:
 ```hcl
-  module "ecr" {
-    source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.0"
-    name        = "ecr"
-    application = "clouddrove"
-    environment = "test"
-    label_order = ["environment", "name", "application"]
-}
+    module "ecr" {
+      source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.1"
+      name        = "ecr"
+      application = "clouddrove"
+      environment = "test"
+      label_order = ["environment", "application", "name"]
+  }
 ```
 
 
