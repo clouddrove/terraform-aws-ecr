@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "empty" {
 
 data "aws_iam_policy_document" "resource_readonly_access" {
   statement {
-    sid = "ReadonlyAccess"
+    sid    = "ReadonlyAccess"
     effect = "Allow"
 
     principals {
@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "resource_readonly_access" {
 
 data "aws_iam_policy_document" "resource_full_access" {
   statement {
-    sid = "FullAccess"
+    sid    = "FullAccess"
     effect = "Allow"
 
     principals {
@@ -122,15 +122,15 @@ data "aws_iam_policy_document" "resource_full_access" {
 
 
 data "aws_iam_policy_document" "resource" {
-  source_json = local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
+  source_json   = local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
   override_json = local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access.*.json) : join("", data.aws_iam_policy_document.empty.*.json)
 }
 
 # Module      : ECR  REPOSITORY
 # Description : Provides an Elastic Container Registry Repository Policy.
 resource "aws_ecr_repository_policy" "default" {
-  count = local.ecr_need_policy && var.enabled_ecr ? 1 : 0
+  count      = local.ecr_need_policy && var.enabled_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default.*.name)
-  policy = join("", data.aws_iam_policy_document.resource.*.json)
+  policy     = join("", data.aws_iam_policy_document.resource.*.json)
 }
 
