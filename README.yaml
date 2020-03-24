@@ -36,7 +36,7 @@ usage : |-
   Here is an example of how you can use this module in your inventory structure:
   ```hcl
     module "ecr" {
-      source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.1"
+      source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.2"
       name        = "ecr"
       application = "clouddrove"
       environment = "test"
