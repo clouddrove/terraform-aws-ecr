@@ -38,7 +38,7 @@
 <hr>
 
 
-We eat, drink, sleep and most importantly love **DevOps**. We are working towards stratergies for standardizing architecture while ensuring security for the infrastructure. We are strong believer of the philosophy <b>Bigger problems are always solved by breaking them into smaller manageable problems</b>. Resonating with microservices architecture, it is considered best-practice to run database, cluster, storage in smaller <b>connected yet manageable pieces</b> within the infrastructure.
+We eat, drink, sleep and most importantly love **DevOps**. We are working towards strategies for standardizing architecture while ensuring security for the infrastructure. We are strong believer of the philosophy <b>Bigger problems are always solved by breaking them into smaller manageable problems</b>. Resonating with microservices architecture, it is considered best-practice to run database, cluster, storage in smaller <b>connected yet manageable pieces</b> within the infrastructure.
 
 This module is basically combination of [Terraform open source](https://www.terraform.io/) and includes automatation tests and examples. It also helps to create and improve your infrastructure with minimalistic code instead of maintaining the whole infrastructure code yourself.
 
@@ -71,13 +71,13 @@ This module has a few dependencies:
 ### Simple Example
 Here is an example of how you can use this module in your inventory structure:
 ```hcl
-    module "ecr" {
-      source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.1"
-      name        = "ecr"
-      application = "clouddrove"
-      environment = "test"
-      label_order = ["environment", "application", "name"]
-  }
+  module "ecr" {
+    source      = "git::https://github.com/clouddrove/terraform-aws-ecr.git?ref=tags/0.12.2"
+    name        = "ecr"
+    application = "clouddrove"
+    environment = "test"
+    label_order = ["environment", "application", "name"]
+}
 ```
 
 
@@ -89,27 +89,28 @@ Here is an example of how you can use this module in your inventory structure:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| application | Application (e.g. `cd` or `clouddrove`). | string | `` | no |
-| attributes | Additional attributes (e.g. `1`). | list | `<list>` | no |
-| delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | string | `-` | no |
-| enabled_ecr | Set to false to prevent the module from creating any resources. | bool | `true` | no |
-| environment | Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
-| label_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
-| max_image_count | How many Docker Image versions AWS ECR will store. | number | `7` | no |
-| name | Name  (e.g. `app` or `cluster`). | string | `` | no |
-| principals_full_access | Principal ARN to provide with full access to the ECR. | list | `<list>` | no |
-| principals_readonly_access | Principal ARN to provide with readonly access to the ECR. | list | `<list>` | no |
-| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | map | `<map>` | no |
-| use_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | bool | `true` | no |
+| application | Application \(e.g. `cd` or `clouddrove`\). | string | `""` | no |
+| attributes | Additional attributes \(e.g. `1`\). | list | `<list>` | no |
+| delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | string | `"-"` | no |
+| enabled\_ecr | Set to false to prevent the module from creating any resources. | bool | `"true"` | no |
+| environment | Environment \(e.g. `prod`, `dev`, `staging`\). | string | `""` | no |
+| label\_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
+| managedby | ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'. | string | `"anmol@clouddrove.com"` | no |
+| max\_image\_count | How many Docker Image versions AWS ECR will store. | number | `"7"` | no |
+| name | Name  \(e.g. `app` or `cluster`\). | string | `""` | no |
+| principals\_full\_access | Principal ARN to provide with full access to the ECR. | list | `<list>` | no |
+| principals\_readonly\_access | Principal ARN to provide with readonly access to the ECR. | list | `<list>` | no |
+| tags | Additional tags \(e.g. map\(`BusinessUnit`,`XYZ`\). | map | `<map>` | no |
+| use\_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | bool | `"true"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | arn | Registry ARN. |
-| registry_id | Registry ID. |
-| registry_url | Registry URL. |
-| repository_name | Registry name. |
+| registry\_id | Registry ID. |
+| registry\_url | Registry URL. |
+| repository\_name | Registry name. |
 | tags | A mapping of tags to assign to the resource. |
 
 
