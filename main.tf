@@ -13,7 +13,7 @@ locals {
 #              tags for resources. You can use terraform-labels to implement a strict
 #              naming convention.
 module "labels" {
-  source = "git::https://github.com/clouddrove/terraform-labels.git"
+  source = "git::https://github.com/clouddrove/terraform-labels.git?ref=tags/0.13.0"
 
   name        = var.name
   application = var.application
@@ -25,9 +25,15 @@ module "labels" {
 # Module      : ECR  REPOSITORY
 # Description : Provides an Elastic Container Registry Repository.
 resource "aws_ecr_repository" "default" {
-  count = var.enabled_ecr ? 1 : 0
-  name  = module.labels.id
-  tags  = module.labels.tags
+  count                = var.enabled_ecr ? 1 : 0
+  name                 = module.labels.id
+  tags                 = module.labels.tags
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
 }
 
 resource "aws_ecr_lifecycle_policy" "default" {
