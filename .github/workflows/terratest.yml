@@ -4,23 +4,19 @@ on:
     branches:
       - master
     types: [labeled]
-
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
-
       - name: 'Checkout'
         uses: actions/checkout@master
-
       - name: Configure AWS Credentials
         uses: clouddrove/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.TEST_AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.TEST_AWS_ACCESS_SECRET_KEY }}
           aws-region: us-east-2
-
       - name: 'Terratest'
         if: ${{ github.event.label.name == 'terratest' }}
         uses: 'clouddrove/github-actions@v4.0'
@@ -29,7 +25,6 @@ jobs:
           tf_actions_working_dir: ./_test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: 'Slack Notification'
         uses: clouddrove/action-slack@v2
         with:

@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-
 jobs:
   readme-create:
     name: 'readme-create'
@@ -11,12 +10,10 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@master
-
       - name: Set up Python 3.7.
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-
       - name: 'create readme'
         uses: 'clouddrove/github-actions@v4.0'
         with:
@@ -24,16 +21,12 @@ jobs:
           github_token: '${{ secrets.GITHUB}}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-
-
       - name: pre-commit check errors
         uses: pre-commit/action@v2.0.0
         continue-on-error: true
-
       - name: pre-commit fix erros
         uses: pre-commit/action@v2.0.0
         continue-on-error: true
-
       - name: 'push readme'
         uses: 'clouddrove/github-actions@v4.0'
         continue-on-error: true
@@ -41,7 +34,6 @@ jobs:
           actions_subcommand: 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-
       - name: 'Slack Notification'
         uses: clouddrove/action-slack@v2
         with:
