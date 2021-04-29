@@ -6,7 +6,6 @@ provider "aws" {
 module "ecr" {
   source               = "./../"
   name                 = "ecr"
-  application          = "clouddrove"
   environment          = "test"
   label_order          = ["environment", "name"]
   scan_on_push         = true
