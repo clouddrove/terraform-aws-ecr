@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: 'create readme'
-        uses: 'clouddrove/github-actions@v4.0'
+        uses: 'clouddrove/github-actions@v6.0'
         with:
           actions_subcommand: 'readme'
           github_token: '${{ secrets.GITHUB}}'
@@ -28,7 +28,7 @@ jobs:
         uses: pre-commit/action@v2.0.0
         continue-on-error: true
       - name: 'push readme'
-        uses: 'clouddrove/github-actions@v4.0'
+        uses: 'clouddrove/github-actions@v6.0'
         continue-on-error: true
         with:
           actions_subcommand: 'push'
