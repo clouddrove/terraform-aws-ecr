@@ -6,20 +6,15 @@ variable "name" {
   description = "Name  (e.g. `app` or `cluster`)."
 }
 
-variable "application" {
-  type        = string
-  default     = ""
-  description = "Application (e.g. `cd` or `clouddrove`)."
-}
 
 variable "environment" {
   type        = string
-  default     = ""
+  default     = "test"
   description = "Environment (e.g. `prod`, `dev`, `staging`)."
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Label order, e.g. `name`,`application`."
 }
@@ -27,12 +22,12 @@ variable "label_order" {
 variable "managedby" {
   type        = string
   default     = "anmol@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+  description = "ManagedBy, eg 'CloudDrove' "
 }
 
 variable "attributes" {
-  type        = list
-  default     = []
+  type        = list(any)
+  default     = ["environment", "name"]
   description = "Additional attributes (e.g. `1`)."
 }
 
@@ -43,7 +38,7 @@ variable "delimiter" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
@@ -61,7 +56,7 @@ variable "max_image_count" {
 }
 
 variable "principals_readonly_access" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Principal ARN to provide with readonly access to the ECR."
 }
@@ -73,7 +68,7 @@ variable "use_fullname" {
 }
 
 variable "principals_full_access" {
-  type        = list
+  type        = list(any)
   description = "Principal ARN to provide with full access to the ECR."
   default     = []
 }
