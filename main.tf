@@ -30,6 +30,10 @@ resource "aws_ecr_repository" "default" {
   tags                 = module.labels.tags
   image_tag_mutability = var.image_tag_mutability
 
+  encryption_configuration {
+    encryption_type = "KMS"
+  }
+
   image_scanning_configuration {
     scan_on_push = var.scan_on_push
   }
