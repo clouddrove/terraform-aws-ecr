@@ -74,7 +74,7 @@ variable "principals_full_access" {
 }
 variable "image_tag_mutability" {
   type        = string
-  default     = "MUTABLE"
+  default     = "IMMUTABLE"
   description = "The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE."
 }
 variable "scan_on_push" {
