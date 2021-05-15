@@ -73,11 +73,8 @@ Here is an example of how you can use this module in your inventory structure:
 ```hcl
   module "ecr" {
     source      = "clouddrove/ecr/aws"
-    version     = "0.13.0"
+    version     = "0.14.0"
     name        = "ecr"
-    application = "clouddrove"
-    environment = "test"
-    label_order = ["environment", "application", "name"]
     scan_on_push         = true
     image_tag_mutability = "MUTABLE"
 }
@@ -92,20 +89,19 @@ Here is an example of how you can use this module in your inventory structure:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| application | Application (e.g. `cd` or `clouddrove`). | `string` | `""` | no |
-| attributes | Additional attributes (e.g. `1`). | `list` | `[]` | no |
+| attributes | Additional attributes (e.g. `1`). | `list(any)` | <pre>[<br>  "environment",<br>  "name"<br>]</pre> | no |
 | delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
 | enabled\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
-| image\_tag\_mutability | The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE. | `string` | `"MUTABLE"` | no |
-| label\_order | Label order, e.g. `name`,`application`. | `list` | `[]` | no |
-| managedby | ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'. | `string` | `"anmol@clouddrove.com"` | no |
+| environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
+| image\_tag\_mutability | The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE. | `string` | `"IMMUTABLE"` | no |
+| label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
+| managedby | ManagedBy, eg 'CloudDrove' | `string` | `"anmol@clouddrove.com"` | no |
 | max\_image\_count | How many Docker Image versions AWS ECR will store. | `number` | `7` | no |
 | name | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
-| principals\_full\_access | Principal ARN to provide with full access to the ECR. | `list` | `[]` | no |
-| principals\_readonly\_access | Principal ARN to provide with readonly access to the ECR. | `list` | `[]` | no |
+| principals\_full\_access | Principal ARN to provide with full access to the ECR. | `list(any)` | `[]` | no |
+| principals\_readonly\_access | Principal ARN to provide with readonly access to the ECR. | `list(any)` | `[]` | no |
 | scan\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false). | `bool` | `true` | no |
-| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map` | `{}` | no |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
 | use\_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | `bool` | `true` | no |
 
 ## Outputs
