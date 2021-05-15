@@ -37,11 +37,8 @@ usage : |-
   ```hcl
     module "ecr" {
       source      = "clouddrove/ecr/aws"
-      version     = "0.13.0"
+      version     = "0.14.0"
       name        = "ecr"
-      application = "clouddrove"
-      environment = "test"
-      label_order = ["environment", "application", "name"]
       scan_on_push         = true
       image_tag_mutability = "MUTABLE"
   }
