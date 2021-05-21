@@ -28,7 +28,7 @@ resource "aws_ecr_repository" "default" {
   count                = var.enabled_ecr ? 1 : 0
   name                 = module.labels.id
   tags                 = module.labels.tags
-  image_tag_mutability = var.image_tag_mutability
+  image_tag_mutability = "IMMUTABLE"
 
   encryption_configuration {
     encryption_type = "KMS"
