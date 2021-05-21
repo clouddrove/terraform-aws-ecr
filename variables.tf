@@ -72,11 +72,7 @@ variable "principals_full_access" {
   description = "Principal ARN to provide with full access to the ECR."
   default     = []
 }
-variable "image_tag_mutability" {
-  type        = string
-  default     = "IMMUTABLE"
-  description = "The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE."
-}
+
 variable "scan_on_push" {
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
