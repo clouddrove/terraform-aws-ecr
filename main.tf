@@ -145,4 +145,3 @@ resource "aws_ecr_repository_policy" "default" {
   repository = join("", aws_ecr_repository.default.*.name)
   policy     = join("", data.aws_iam_policy_document.resource.*.json)
 }
-

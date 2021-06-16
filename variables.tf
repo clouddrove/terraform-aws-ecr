@@ -80,7 +80,7 @@ variable "scan_on_push" {
 }
 
 variable "repository" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Terraform current module repo"
 }
