@@ -92,7 +92,9 @@ Here is an example of how you can use this module in your inventory structure:
 | attributes | Additional attributes (e.g. `1`). | `list(any)` | <pre>[<br>  "environment",<br>  "name"<br>]</pre> | no |
 | delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
 | enabled\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
+| encryption\_configuration | ECR encryption configuration | <pre>object({<br>    encryption_type = string<br>    kms_key         = any<br>  })</pre> | `null` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
+| image\_tag\_mutability | The tag mutability setting for the repository. | `string` | `"IMMUTABLE"` | no |
 | label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
 | managedby | ManagedBy, eg 'CloudDrove' | `string` | `"anmol@clouddrove.com"` | no |
 | max\_image\_count | How many Docker Image versions AWS ECR will store. | `number` | `7` | no |
