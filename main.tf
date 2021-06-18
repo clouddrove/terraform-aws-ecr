@@ -29,12 +29,15 @@ resource "aws_ecr_repository" "default" {
   count                = var.enabled_ecr ? 1 : 0
   name                 = module.labels.id
   tags                 = module.labels.tags
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = var.image_tag_mutability
 
-  encryption_configuration {
-    encryption_type = "KMS"
+  dynamic "encryption_configuration" {
+    for_each = var.encryption_configuration != null ? [var.encryption_configuration] : []
+    content {
+      encryption_type = lookup(encryption_configuration.value.encryption_type, null)
+      kms_key         = lookup(encryption_configuration.value.kms_key, null)
+    }
   }
-
   image_scanning_configuration {
     scan_on_push = var.scan_on_push
   }

@@ -84,3 +84,18 @@ variable "repository" {
   default     = "https://github.com/clouddrove/terraform-aws-ecr"
   description = "Terraform current module repo"
 }
+
+variable "image_tag_mutability" {
+  type        = string
+  default     = "IMMUTABLE"
+  description = "The tag mutability setting for the repository."
+}
+
+variable "encryption_configuration" {
+  type = object({
+    encryption_type = string
+    kms_key         = any
+  })
+  description = "ECR encryption configuration"
+  default     = null
+}
