@@ -81,6 +81,6 @@ variable "scan_on_push" {
 
 variable "repository" {
   type        = string
-  default     = ""
+  default     = "https://github.com/clouddrove/terraform-aws-ecr"
   description = "Terraform current module repo"
 }
