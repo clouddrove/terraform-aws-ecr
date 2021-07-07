@@ -29,6 +29,6 @@ func Test(t *testing.T) {
 	Tags := terraform.OutputMap(t, terraformOptions, "tags")
 
 	// Check that we get back the outputs that we expect
-	assert.Equal(t, "test-clouddrove-ecr", Tags["Name"])
+	assert.Equal(t, "test-ecr", Tags["Name"])
 	assert.Contains(t, Arn, "arn:aws:ecr")
 }
