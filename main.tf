@@ -25,6 +25,7 @@ module "labels" {
 
 # Module      : ECR  REPOSITORY
 # Description : Provides an Elastic Container Registry Repository.
+#tfsec:ignore:aws-ecr-enable-image-scans
 resource "aws_ecr_repository" "default" {
   count                = var.enabled_ecr ? 1 : 0
   name                 = module.labels.id
