@@ -38,10 +38,18 @@ resource "aws_ecr_repository" "default" {
       kms_key         = lookup(encryption_configuration.value.kms_key, null)
     }
   }
-  image_scanning_configuration {
-    scan_on_push = var.scan_on_push
+   dynamic "image_scanning_configuration" {
+    for_each = var.image_scanning_configuration
+     content {
+      scan_on_push = lookup(image_scanning_configuration.value.scan_on_push, null)
   }
-
+  }
+   dynamic "timeouts" {
+    for_each = var.timeouts
+    content {
+      delete = lookup(timeouts.value.delete, null)
+    }
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "default" {
