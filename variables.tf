@@ -99,3 +99,17 @@ variable "encryption_configuration" {
   description = "ECR encryption configuration"
   default     = null
 }
+
+# Image scanning configuration
+variable "image_scanning_configuration" {
+  type        = map
+  default     = {}
+   description = "Configuration block that defines image scanning configuration for the repository. By default, image scanning must be manually triggered. See the ECR User Guide for more information about image scanning."
+}
+
+# Timeouts
+variable "timeouts" {
+  type        = map
+  default     = {}
+  description = "Timeouts map."
+}
