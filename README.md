@@ -14,10 +14,16 @@
 <p align="center">
 
 <a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v0.15-green" alt="Terraform">
+  <img src="https://img.shields.io/badge/Terraform-v1.1.7-green" alt="Terraform">
 </a>
 <a href="LICENSE.md">
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="Licence">
+  <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
+</a>
+<a href="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml">
+  <img src="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
+</a>
+<a href="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml">
+  <img src="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml/badge.svg" alt="static-checks">
 </a>
 
 
@@ -51,7 +57,7 @@ We have [*fifty plus terraform modules*][terraform_modules]. A few of them are c
 
 This module has a few dependencies: 
 
-- [Terraform 0.13](https://learn.hashicorp.com/terraform/getting-started/install.html)
+- [Terraform 1.x.x](https://learn.hashicorp.com/terraform/getting-started/install.html)
 - [Go](https://golang.org/doc/install)
 - [github.com/stretchr/testify/assert](https://github.com/stretchr/testify)
 - [github.com/gruntwork-io/terratest/modules/terraform](https://github.com/gruntwork-io/terratest)
@@ -73,7 +79,7 @@ Here is an example of how you can use this module in your inventory structure:
 ```hcl
   module "ecr" {
     source      = "clouddrove/ecr/aws"
-    version     = "0.15.0"
+    version     = "1.0.1"
     name        = "ecr"
     scan_on_push         = true
     image_tag_mutability = "MUTABLE"
@@ -94,6 +100,7 @@ Here is an example of how you can use this module in your inventory structure:
 | enabled\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
 | encryption\_configuration | ECR encryption configuration | <pre>object({<br>    encryption_type = string<br>    kms_key         = any<br>  })</pre> | `null` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
+| image\_scanning\_configuration | Configuration block that defines image scanning configuration for the repository. By default, image scanning must be manually triggered. See the ECR User Guide for more information about image scanning. | `map` | `{}` | no |
 | image\_tag\_mutability | The tag mutability setting for the repository. | `string` | `"IMMUTABLE"` | no |
 | label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
 | managedby | ManagedBy, eg 'CloudDrove' | `string` | `"anmol@clouddrove.com"` | no |
@@ -104,6 +111,7 @@ Here is an example of how you can use this module in your inventory structure:
 | repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-ecr"` | no |
 | scan\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false). | `bool` | `true` | no |
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
+| timeouts | Timeouts map. | `map` | `{}` | no |
 | use\_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | `bool` | `true` | no |
 
 ## Outputs
