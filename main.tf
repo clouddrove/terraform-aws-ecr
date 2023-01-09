@@ -14,7 +14,7 @@ locals {
 #              naming convention.
 module "labels" {
   source  = "clouddrove/labels/aws"
-  version = "0.15.0"
+  version = "1.3.0"
 
   name        = var.name
   repository  = var.repository
@@ -39,13 +39,13 @@ resource "aws_ecr_repository" "default" {
       kms_key         = lookup(encryption_configuration.value.kms_key, null)
     }
   }
-   dynamic "image_scanning_configuration" {
+  dynamic "image_scanning_configuration" {
     for_each = var.image_scanning_configuration
-     content {
+    content {
       scan_on_push = lookup(image_scanning_configuration.value.scan_on_push, null)
+    }
   }
-  }
-   dynamic "timeouts" {
+  dynamic "timeouts" {
     for_each = var.timeouts
     content {
       delete = lookup(timeouts.value.delete, null)

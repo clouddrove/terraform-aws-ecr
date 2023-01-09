@@ -43,7 +43,7 @@ usage : |-
   ```hcl
     module "ecr" {
       source      = "clouddrove/ecr/aws"
-      version     = "1.0.1"
+      version     = "1.3.0"
       name        = "ecr"
       scan_on_push         = true
       image_tag_mutability = "MUTABLE"
