@@ -43,16 +43,22 @@ variable "tags" {
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
 
-variable "enabled_ecr" {
+variable "enable_private_ecr" {
   type        = bool
-  default     = true
+  default     = false
   description = "Set to false to prevent the module from creating any resources."
 }
 
 variable "max_image_count" {
   type        = number
-  default     = 7
+  default     = 10
   description = "How many Docker Image versions AWS ECR will store."
+}
+
+variable "max_untagged_image_count" {
+  type        = number
+  default     = 1
+  description = "How many Untagged Docker Image versions AWS ECR will store."
 }
 
 variable "principals_readonly_access" {
@@ -62,8 +68,8 @@ variable "principals_readonly_access" {
 }
 
 variable "use_fullname" {
-  type        = bool
-  default     = true
+  type        = string
+  default     = ""
   description = "Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`."
 }
 
@@ -91,20 +97,21 @@ variable "image_tag_mutability" {
   description = "The tag mutability setting for the repository."
 }
 
-variable "encryption_configuration" {
-  type = object({
-    encryption_type = string
-    kms_key         = any
-  })
-  description = "ECR encryption configuration"
-  default     = null
+variable "repository_force_delete" {
+  type        = bool
+  default     = false
+  description = "If `true`, will delete the repository even if it contains images. Defaults to `false`"
 }
 
-# Image scanning configuration
-variable "image_scanning_configuration" {
-  type        = map(any)
-  default     = {}
-  description = "Configuration block that defines image scanning configuration for the repository. By default, image scanning must be manually triggered. See the ECR User Guide for more information about image scanning."
+variable "encryption_type" {
+  type        = string
+  default     = null
+  description = "The encryption type for the repository. Must be one of: `KMS` or `AES256`. Defaults to `AES256`"
+}
+variable "kms_key" {
+  type        = string
+  default     = null
+  description = "The ARN of the KMS key to use when encryption_type is `KMS`. If not specified, uses the default AWS managed key for ECR"
 }
 
 # Timeouts
@@ -112,4 +119,17 @@ variable "timeouts" {
   type        = map(any)
   default     = {}
   description = "Timeouts map."
+}
+
+# Public Repository
+variable "enable_public_ecr" {
+  type        = bool
+  default     = false
+  description = "Set to false to prevent the module from creating any resources."
+}
+
+variable "public_repository_catalog_data" {
+  description = "Catalog data configuration for the repository"
+  type        = any
+  default     = {}
 }
