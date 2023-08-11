@@ -15,7 +15,7 @@ variable "environment" {
 
 variable "label_order" {
   type        = list(any)
-  default     = []
+  default     = ["name", "environment"]
   description = "Label order, e.g. `name`,`application`."
 }
 
@@ -105,9 +105,10 @@ variable "repository_force_delete" {
 
 variable "encryption_type" {
   type        = string
-  default     = null
+  default     = "KMS"
   description = "The encryption type for the repository. Must be one of: `KMS` or `AES256`. Defaults to `AES256`"
 }
+
 variable "kms_key" {
   type        = string
   default     = null
