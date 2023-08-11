@@ -2,12 +2,12 @@
 #Description : This terraform module is used to create ECR on AWS.
 
 output "registry_id" {
-  value       = join("", aws_ecr_repository.default.*.registry_id)
+  value       = try(aws_ecr_repository.default[0].registry_id, aws_ecrpublic_repository.default[0].registry_id, null)
   description = "Registry ID."
 }
 
 output "registry_url" {
-  value       = join("", aws_ecr_repository.default.*.repository_url)
+  value       = try(aws_ecr_repository.default[0].repository_url, aws_ecrpublic_repository.default[0].repository_uri, null)
   description = "Registry URL."
 }
 
@@ -17,7 +17,7 @@ output "repository_name" {
 }
 
 output "arn" {
-  value       = join("", aws_ecr_repository.default.*.arn)
+  value       = try(aws_ecr_repository.default[0].arn, aws_ecrpublic_repository.default[0].arn, null)
   description = "Registry ARN."
 }
 
