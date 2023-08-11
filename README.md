@@ -13,17 +13,14 @@
 
 <p align="center">
 
-<a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v1.1.7-green" alt="Terraform">
+<a href="https://github.com/clouddrove/terraform-aws-subnet/releases/latest">
+  <img src="https://img.shields.io/github/release/clouddrove/terraform-aws-subnet.svg" alt="Latest Release">
+</a>
+<a href="https://github.com/clouddrove/terraform-aws-subnet/actions/workflows/tfsec.yml">
+  <img src="https://github.com/clouddrove/terraform-aws-subnet/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
 </a>
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
-</a>
-<a href="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml">
-  <img src="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
-</a>
-<a href="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml">
-  <img src="https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml/badge.svg" alt="static-checks">
 </a>
 
 
@@ -56,11 +53,7 @@ We have [*fifty plus terraform modules*][terraform_modules]. A few of them are c
 ## Prerequisites
 
 This module has a few dependencies: 
-
-- [Terraform 1.x.x](https://learn.hashicorp.com/terraform/getting-started/install.html)
-- [Go](https://golang.org/doc/install)
-- [github.com/stretchr/testify/assert](https://github.com/stretchr/testify)
-- [github.com/gruntwork-io/terratest/modules/terraform](https://github.com/gruntwork-io/terratest)
+- [Terraform 1.5.4](https://learn.hashicorp.com/terraform/getting-started/install.html)
 
 
 
@@ -74,16 +67,35 @@ This module has a few dependencies:
 **IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-ecr/releases).
 
 
-### Simple Example
-Here is an example of how you can use this module in your inventory structure:
+Here are examples of how you can use this module in your inventory structure:
+### Private ECR
 ```hcl
-  module "ecr" {
-    source      = "clouddrove/ecr/aws"
-    version     = "1.3.0"
-    name        = "ecr"
+  module "privat_-ecr" {
+    source               = "clouddrove/ecr/aws"
+    version              = "1.3.0"
+    enable_private_ecr   = true
+    name                 = "private-ecr"
+    environment          = "test"
     scan_on_push         = true
-    image_tag_mutability = "MUTABLE"
+    max_image_count      = 7
 }
+```
+### Public ECR
+```hcl
+  module "public_ecr" {
+    source                   = "clouddrove/ecr/aws"
+    version                  = "1.3.0"
+    enable_public_ecr        = true
+    name                     = "public-ecr"
+    environment              = "test"
+    max_untagged_image_count = 1
+    max_image_count          = 7
+    public_repository_catalog_data = {
+    description       = "Docker container for some things"
+    operating_systems = ["Linux"]
+    architectures     = ["x86"]
+    }
+  }
 ```
 
 
@@ -97,22 +109,26 @@ Here is an example of how you can use this module in your inventory structure:
 |------|-------------|------|---------|:--------:|
 | attributes | Additional attributes (e.g. `1`). | `list(any)` | <pre>[<br>  "environment",<br>  "name"<br>]</pre> | no |
 | delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
-| enabled\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| encryption\_configuration | ECR encryption configuration | <pre>object({<br>    encryption_type = string<br>    kms_key         = any<br>  })</pre> | `null` | no |
+| enable\_private\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `false` | no |
+| enable\_public\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `false` | no |
+| encryption\_type | The encryption type for the repository. Must be one of: `KMS` or `AES256`. Defaults to `AES256` | `string` | `"KMS"` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
-| image\_scanning\_configuration | Configuration block that defines image scanning configuration for the repository. By default, image scanning must be manually triggered. See the ECR User Guide for more information about image scanning. | `map(any)` | `{}` | no |
 | image\_tag\_mutability | The tag mutability setting for the repository. | `string` | `"IMMUTABLE"` | no |
-| label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
+| kms\_key | The ARN of the KMS key to use when encryption\_type is `KMS`. If not specified, uses the default AWS managed key for ECR | `string` | `null` | no |
+| label\_order | Label order, e.g. `name`,`application`. | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
 | managedby | ManagedBy, eg 'CloudDrove' | `string` | `"anmol@clouddrove.com"` | no |
-| max\_image\_count | How many Docker Image versions AWS ECR will store. | `number` | `7` | no |
+| max\_image\_count | How many Docker Image versions AWS ECR will store. | `number` | `10` | no |
+| max\_untagged\_image\_count | How many Untagged Docker Image versions AWS ECR will store. | `number` | `1` | no |
 | name | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
 | principals\_full\_access | Principal ARN to provide with full access to the ECR. | `list(any)` | `[]` | no |
 | principals\_readonly\_access | Principal ARN to provide with readonly access to the ECR. | `list(any)` | `[]` | no |
+| public\_repository\_catalog\_data | Catalog data configuration for the repository | `any` | `{}` | no |
 | repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-ecr"` | no |
+| repository\_force\_delete | If `true`, will delete the repository even if it contains images. Defaults to `false` | `bool` | `false` | no |
 | scan\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false). | `bool` | `true` | no |
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
 | timeouts | Timeouts map. | `map(any)` | `{}` | no |
-| use\_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | `bool` | `true` | no |
+| use\_fullname | Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`. | `string` | `""` | no |
 
 ## Outputs
 
