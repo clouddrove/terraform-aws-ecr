@@ -28,7 +28,6 @@ module "labels" {
 
 # Module      : ECR  REPOSITORY
 # Description : Provides an Elastic Container Registry Repository.
-#tfsec:ignore:aws-ecr-enable-image-scans
 
 ################################################################################
 # Private Repository
