@@ -15,19 +15,19 @@ github_repo: clouddrove/terraform-aws-ecr
 
 # Badges to display
 badges:
-  - name: "Terraform"
-    image: "https://img.shields.io/badge/Terraform-v1.1.7-green"
-    url: "https://www.terraform.io"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/clouddrove/terraform-aws-subnet.svg"
+    url: "https://github.com/clouddrove/terraform-aws-subnet/releases/latest"
+  - name: "tfsec"
+    image: "https://github.com/clouddrove/terraform-aws-subnet/actions/workflows/tfsec.yml/badge.svg"
+    url: "https://github.com/clouddrove/terraform-aws-subnet/actions/workflows/tfsec.yml"
   - name: "Licence"
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
     url: "LICENSE.md"
-  - name: "tfsec"
-    image: "https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml/badge.svg"
-    url: "https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/tfsec.yml"
-  - name: "static-checks"
-    image: "https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml/badge.svg"
-    url: "https://github.com/clouddrove/terraform-aws-ecr/actions/workflows/terraform.yml"
 
+prerequesties:
+  - name: Terraform 1.5.4
+    url: https://learn.hashicorp.com/terraform/getting-started/install.html
 #  description of this project
 description: |-
   This terraform module is used to create ECR on AWS.
@@ -38,14 +38,33 @@ include:
 
 # How to use this project
 usage : |-
-  ### Simple Example
-  Here is an example of how you can use this module in your inventory structure:
+  Here are examples of how you can use this module in your inventory structure:
+  ### Private ECR
   ```hcl
-    module "ecr" {
-      source      = "clouddrove/ecr/aws"
-      version     = "1.3.0"
-      name        = "ecr"
+    module "privat_-ecr" {
+      source               = "clouddrove/ecr/aws"
+      version              = "1.3.0"
+      enable_private_ecr   = true
+      name                 = "private-ecr"
+      environment          = "test"
       scan_on_push         = true
-      image_tag_mutability = "MUTABLE"
+      max_image_count      = 7
   }
+  ```
+  ### Public ECR
+  ```hcl
+    module "public_ecr" {
+      source                   = "clouddrove/ecr/aws"
+      version                  = "1.3.0"
+      enable_public_ecr        = true
+      name                     = "public-ecr"
+      environment              = "test"
+      max_untagged_image_count = 1
+      max_image_count          = 7
+      public_repository_catalog_data = {
+      description       = "Docker container for some things"
+      operating_systems = ["Linux"]
+      architectures     = ["x86"]
+      }
+    }
   ```
