@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2023-08-28
+### :sparkles: New Features
+- [`0b5f082`](https://github.com/clouddrove/terraform-aws-ecr/commit/0b5f0820ef6c45624309e8a0027a115c1f1ba120) - auto changelog action added *(commit by [@mamrajyadav](https://github.com/mamrajyadav))*
+- [`3519bd9`](https://github.com/clouddrove/terraform-aws-ecr/commit/3519bd913ee9b6ffa4c288ea78f359c9d09c3b96) - added dependabot.yml file *(commit by [@mamrajyadav](https://github.com/mamrajyadav))*
+- [`51b7e0b`](https://github.com/clouddrove/terraform-aws-ecr/commit/51b7e0b7b317bb1599eb1aedc5197ecbfd487876) - Added public ecr and updated variables *(commit by [@h1manshu98](https://github.com/h1manshu98))*
+- [`bb24148`](https://github.com/clouddrove/terraform-aws-ecr/commit/bb2414867da1a62a3a86ac1adec29eb34d45ce78) - Updated output variables for public ecr *(commit by [@h1manshu98](https://github.com/h1manshu98))*
+- [`0a8a8d0`](https://github.com/clouddrove/terraform-aws-ecr/commit/0a8a8d0e63cdf8013810e113374ed47bb6205b02) - Updated output variables for public ecr *(commit by [@h1manshu98](https://github.com/h1manshu98))*
+
+### :bug: Bug Fixes
+- [`a7afe40`](https://github.com/clouddrove/terraform-aws-ecr/commit/a7afe40de11ad4d4cf57f892faf7e5b153e5d196) - Update workflows and examples *(commit by [@13archit](https://github.com/13archit))*
+- [`0a76c9d`](https://github.com/clouddrove/terraform-aws-ecr/commit/0a76c9d4463debbdb06e31176b8d233a77c4229f) - Fix tfchecks workflow *(commit by [@13archit](https://github.com/13archit))*
+- [`728cd5d`](https://github.com/clouddrove/terraform-aws-ecr/commit/728cd5d4b585db099fbec7d3122d26de22860da1) - Added versions.tf *(commit by [@13archit](https://github.com/13archit))*
+- [`ef0f884`](https://github.com/clouddrove/terraform-aws-ecr/commit/ef0f884c6f5421bae3c2e6f8f8ceb2f9224eee1a) - Removed tfsec ignore. *(commit by [@13archit](https://github.com/13archit))*
+- [`f0c0330`](https://github.com/clouddrove/terraform-aws-ecr/commit/f0c033035656e0c226a767a1a4ba1847f4b07eda) - Updates variables.tf and Readme.yaml *(commit by [@13archit](https://github.com/13archit))*
+
+
 ## [1.3.1] - 2023-04-05
 ### :bug: Bug Fixes
 - [`357a36e`](https://github.com/clouddrove/terraform-aws-ecr/commit/357a36e4eb1e1836af46c5534bff5da919c29cd8) - from clouddrove/bug/6ix-81
@@ -65,3 +81,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.1]: https://github.com/clouddrove/terraform-aws-ecr/compare/1.0.1...master
 [1.3.0]: https://github.com/clouddrove/terraform-aws-ecr/compare/1.3.0...master
 [1.3.1]: https://github.com/clouddrove/terraform-aws-ecr/releases/tag/1.3.1
+[1.3.2]: https://github.com/clouddrove/terraform-aws-ecr/compare/1.3.1...1.3.2
