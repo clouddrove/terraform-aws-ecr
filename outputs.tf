@@ -12,7 +12,7 @@ output "registry_url" {
 }
 
 output "repository_name" {
-  value       = join("", aws_ecr_repository.default.*.name)
+  value       = join("", aws_ecr_repository.default[*].name)
   description = "Registry name."
 }
 

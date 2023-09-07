@@ -1,5 +1,5 @@
 output "private_ecr_arn" {
-  value       = module.private_ecr.*.arn
+  value       = module.private_ecr[*].arn
   description = "Registry name."
 }
 
