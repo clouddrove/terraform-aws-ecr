@@ -1,5 +1,5 @@
 output "public_ecr_arn" {
-  value       = module.public_ecr.*.arn
+  value       = module.public_ecr[*].arn
   description = "Registry name."
 }
 

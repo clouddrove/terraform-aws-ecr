@@ -58,7 +58,7 @@ resource "aws_ecr_repository" "default" {
 
 resource "aws_ecr_lifecycle_policy" "private" {
   count      = var.enable_private_ecr ? 1 : 0
-  repository = join("", aws_ecr_repository.default.*.name)
+  repository = join("", aws_ecr_repository.default[*].name)
 
   policy = <<EOF
 {
@@ -170,14 +170,14 @@ data "aws_iam_policy_document" "resource_full_access_private" {
 }
 
 data "aws_iam_policy_document" "resource_private" {
-  source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_private.*.json) : join("", data.aws_iam_policy_document.empty.*.json)]
-  override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_private.*.json) : join("", data.aws_iam_policy_document.empty.*.json)]
+  source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_private[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
+  override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_private[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
 }
 
 resource "aws_ecr_repository_policy" "private" {
   count      = local.ecr_need_policy && var.enable_private_ecr ? 1 : 0
-  repository = join("", aws_ecr_repository.default.*.name)
-  policy     = join("", data.aws_iam_policy_document.resource_private.*.json)
+  repository = join("", aws_ecr_repository.default[*].name)
+  policy     = join("", data.aws_iam_policy_document.resource_private[*].json)
 }
 
 ################################################################################
@@ -228,14 +228,14 @@ data "aws_iam_policy_document" "resource_full_access_public" {
 
 
 data "aws_iam_policy_document" "resource_public" {
-  source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_public.*.json) : join("", data.aws_iam_policy_document.empty.*.json)]
-  override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_public.*.json) : join("", data.aws_iam_policy_document.empty.*.json)]
+  source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_public[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
+  override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_public[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
 }
 
 resource "aws_ecr_repository_policy" "public" {
   count      = local.ecr_need_policy && var.enable_public_ecr ? 1 : 0
-  repository = join("", aws_ecrpublic_repository.default.*.name)
-  policy     = join("", data.aws_iam_policy_document.resource_public.*.json)
+  repository = join("", aws_ecrpublic_repository.default[*].repository_name)
+  policy     = join("", data.aws_iam_policy_document.resource_public[*].json)
 }
 
 data "aws_iam_policy_document" "empty" {}
