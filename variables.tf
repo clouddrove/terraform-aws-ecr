@@ -43,6 +43,12 @@ variable "tags" {
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
 
+variable "enable" {
+  type        = bool
+  default     = true
+  description = "Set to false to prevent the module from creating any resources."
+}
+
 variable "enable_private_ecr" {
   type        = bool
   default     = false

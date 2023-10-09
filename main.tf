@@ -33,7 +33,7 @@ module "labels" {
 # Private Repository
 ################################################################################
 resource "aws_ecr_repository" "default" {
-  count                = var.enable_private_ecr ? 1 : 0
+  count                = var.enable && var.enable_private_ecr ? 1 : 0
   name                 = var.use_fullname != "" ? var.use_fullname : module.labels.id
   tags                 = module.labels.tags
   image_tag_mutability = var.image_tag_mutability
@@ -57,7 +57,7 @@ resource "aws_ecr_repository" "default" {
 }
 
 resource "aws_ecr_lifecycle_policy" "private" {
-  count      = var.enable_private_ecr ? 1 : 0
+  count      = var.enable && var.enable_private_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default[*].name)
 
   policy = <<EOF
@@ -96,7 +96,7 @@ EOF
 # Public Repository
 ################################################################################
 resource "aws_ecrpublic_repository" "default" {
-  count = var.enable_public_ecr ? 1 : 0
+  count = var.enable && var.enable_public_ecr ? 1 : 0
 
   repository_name = var.use_fullname != "" ? var.use_fullname : module.labels.id
 
@@ -119,6 +119,7 @@ resource "aws_ecrpublic_repository" "default" {
 # Private ECR IAM Policies
 ################################################################################
 data "aws_iam_policy_document" "resource_readonly_access_private" {
+  count = var.enable ? 1 : 0
   statement {
     sid    = "ReadonlyAccess"
     effect = "Allow"
@@ -153,6 +154,7 @@ data "aws_iam_policy_document" "resource_readonly_access_private" {
 }
 
 data "aws_iam_policy_document" "resource_full_access_private" {
+  count = var.enable ? 1 : 0
   statement {
     sid    = "FullAccess"
     effect = "Allow"
@@ -170,12 +172,13 @@ data "aws_iam_policy_document" "resource_full_access_private" {
 }
 
 data "aws_iam_policy_document" "resource_private" {
+  count                     = var.enable ? 1 : 0
   source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_private[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
   override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_private[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
 }
 
 resource "aws_ecr_repository_policy" "private" {
-  count      = local.ecr_need_policy && var.enable_private_ecr ? 1 : 0
+  count      = var.enable && local.ecr_need_policy && var.enable_private_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default[*].name)
   policy     = join("", data.aws_iam_policy_document.resource_private[*].json)
 }
@@ -184,6 +187,7 @@ resource "aws_ecr_repository_policy" "private" {
 # Public ECR IAM Policies
 ################################################################################
 data "aws_iam_policy_document" "resource_readonly_access_public" {
+  count = var.enable ? 1 : 0
   statement {
     sid    = "ReadonlyAccess"
     effect = "Allow"
@@ -210,6 +214,7 @@ data "aws_iam_policy_document" "resource_readonly_access_public" {
 }
 
 data "aws_iam_policy_document" "resource_full_access_public" {
+  count = var.enable ? 1 : 0
   statement {
     sid    = "FullAccess"
     effect = "Allow"
@@ -228,14 +233,17 @@ data "aws_iam_policy_document" "resource_full_access_public" {
 
 
 data "aws_iam_policy_document" "resource_public" {
+  count                     = var.enable ? 1 : 0
   source_policy_documents   = [local.principals_readonly_access_non_empty ? join("", data.aws_iam_policy_document.resource_readonly_access_public[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
   override_policy_documents = [local.principals_full_access_non_empty ? join("", data.aws_iam_policy_document.resource_full_access_public[*].json) : join("", data.aws_iam_policy_document.empty[*].json)]
 }
 
 resource "aws_ecr_repository_policy" "public" {
-  count      = local.ecr_need_policy && var.enable_public_ecr ? 1 : 0
+  count      = var.enable && local.ecr_need_policy && var.enable_public_ecr ? 1 : 0
   repository = join("", aws_ecrpublic_repository.default[*].repository_name)
   policy     = join("", data.aws_iam_policy_document.resource_public[*].json)
 }
 
-data "aws_iam_policy_document" "empty" {}
+data "aws_iam_policy_document" "empty" {
+  count = var.enable ? 1 : 0
+}

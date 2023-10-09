@@ -28,7 +28,7 @@ updates:
     open-pull-requests-limit: 3
 
   - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "/_example/privat_ecr" # Location of package manifests
+    directory: "/_example/private_ecr" # Location of package manifests
     schedule:
       interval: "weekly"
     # Add assignees
