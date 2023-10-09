@@ -12,6 +12,7 @@ locals {
 ##-----------------------------------------------------------------------------
 module "private_ecr" {
   source             = "./../../"
+  
   enable_private_ecr = true
   name               = local.name
   environment        = local.environment
