@@ -27,7 +27,7 @@ variable "managedby" {
 
 variable "attributes" {
   type        = list(any)
-  default     = ["environment", "name"]
+  default     = []
   description = "Additional attributes (e.g. `1`)."
 }
 
