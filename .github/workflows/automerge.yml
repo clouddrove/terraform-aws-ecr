@@ -1,0 +1,12 @@
+---
+name: Auto merge
+on:
+  pull_request:
+jobs:
+  auto-merge:
+    uses: clouddrove/github-shared-workflows/.github/workflows/auto_merge.yml@1.0.9
+    secrets:
+      GITHUB: ${{ secrets.GITHUB }}
+    with:
+      tfcheck: 'public_ecr / Evaluate Terraform versions (1.5.7, ./_example/public_ecr/)'
+...
