@@ -8,5 +8,5 @@ jobs:
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
-      tfcheck: 'public_ecr / Evaluate Terraform versions (1.5.7, ./_example/public_ecr/)'
+      tfcheck: 'private_ecr / Check code format'
 ...
