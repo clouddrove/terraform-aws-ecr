@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 jobs:
   private_ecr:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.2.4
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       working_directory: './examples/private_ecr/'
   public_ecr:
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.2.4
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       working_directory: './examples/public_ecr/'
