@@ -35,4 +35,3 @@
 | registry\_url | Registry URL. |
 | repository\_name | Registry name. |
 | tags | A mapping of tags to assign to the resource. |
-
