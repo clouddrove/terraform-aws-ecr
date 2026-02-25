@@ -51,7 +51,7 @@ variable "enable" {
 
 variable "enable_private_ecr" {
   type        = bool
-  default     = false
+  default     = true
   description = "Set to false to prevent the module from creating any resources."
 }
 
@@ -86,6 +86,7 @@ variable "principals_full_access" {
 }
 
 variable "scan_on_push" {
+  # Secure Default applied
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
   default     = true
@@ -105,7 +106,7 @@ variable "image_tag_mutability" {
 
 variable "repository_force_delete" {
   type        = bool
-  default     = false
+  default     = true
   description = "If `true`, will delete the repository even if it contains images. Defaults to `false`"
 }
 
@@ -131,7 +132,7 @@ variable "timeouts" {
 # Public Repository
 variable "enable_public_ecr" {
   type        = bool
-  default     = false
+  default     = true
   description = "Set to false to prevent the module from creating any resources."
 }
 
