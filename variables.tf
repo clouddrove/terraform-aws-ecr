@@ -51,8 +51,8 @@ variable "enable" {
 
 variable "enable_private_ecr" {
   type        = bool
-  default     = false
-  description = "Controls creation of private Amazon ECR repositories. Set to true to enable private ECR. Ensure enable_public_ecr is false to avoid conflicts."
+  default     = true
+  description = "Controls whether private Amazon ECR repositories are created. Set to true to enable creation of private ECR resources, or false to disable them."
 }
 
 variable "max_image_count" {
