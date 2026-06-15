@@ -52,7 +52,7 @@ variable "enable" {
 variable "enable_private_ecr" {
   type        = bool
   default     = true
-  description = "Set to false to prevent the module from creating any resources."
+  description = "Controls whether private Amazon ECR repositories are created. Set to true to enable creation of private ECR resources, or false to disable them."
 }
 
 variable "max_image_count" {
@@ -132,8 +132,8 @@ variable "timeouts" {
 # Public Repository
 variable "enable_public_ecr" {
   type        = bool
-  default     = true
-  description = "Set to false to prevent the module from creating any resources."
+  default     = false
+  description = "Controls creation of public Amazon ECR repositories. Set to true to enable public ECR. Ensure enable_private_ecr is false to avoid conflicts"
 }
 
 variable "public_repository_catalog_data" {
