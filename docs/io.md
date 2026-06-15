@@ -5,8 +5,8 @@
 | attributes | Additional attributes (e.g. `1`). | `list(any)` | `[]` | no |
 | delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
 | enable | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| enable\_private\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| enable\_public\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
+| enable\_private\_ecr | Controls whether private Amazon ECR repositories are created. Set to true to enable creation of private ECR resources, or false to disable them. | `bool` | `true` | no |
+| enable\_public\_ecr | Controls creation of public Amazon ECR repositories. Set to true to enable public ECR. Ensure enable\_private\_ecr is false to avoid conflicts | `bool` | `false` | no |
 | encryption\_type | The encryption type for the repository. Must be one of: `KMS` or `AES256`. Defaults to `AES256` | `string` | `"KMS"` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
 | image\_tag\_mutability | The tag mutability setting for the repository. | `string` | `"IMMUTABLE"` | no |
