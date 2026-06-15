@@ -5,8 +5,8 @@
 | attributes | Additional attributes (e.g. `1`). | `list(any)` | `[]` | no |
 | delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
 | enable | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| enable\_private\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `false` | no |
-| enable\_public\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `false` | no |
+| enable\_private\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
+| enable\_public\_ecr | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
 | encryption\_type | The encryption type for the repository. Must be one of: `KMS` or `AES256`. Defaults to `AES256` | `string` | `"KMS"` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `"test"` | no |
 | image\_tag\_mutability | The tag mutability setting for the repository. | `string` | `"IMMUTABLE"` | no |
@@ -20,7 +20,7 @@
 | principals\_readonly\_access | Principal ARN to provide with readonly access to the ECR. | `list(any)` | `[]` | no |
 | public\_repository\_catalog\_data | Catalog data configuration for the repository | `any` | `{}` | no |
 | repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-ecr"` | no |
-| repository\_force\_delete | If `true`, will delete the repository even if it contains images. Defaults to `false` | `bool` | `false` | no |
+| repository\_force\_delete | If `true`, will delete the repository even if it contains images. Defaults to `false` | `bool` | `true` | no |
 | scan\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false). | `bool` | `true` | no |
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
 | timeouts | Timeouts map. | `map(any)` | `{}` | no |
@@ -35,3 +35,4 @@
 | registry\_url | Registry URL. |
 | repository\_name | Registry name. |
 | tags | A mapping of tags to assign to the resource. |
+
