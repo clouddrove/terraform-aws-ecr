@@ -60,7 +60,10 @@ resource "aws_ecr_lifecycle_policy" "private" {
   count      = var.enable && var.enable_private_ecr ? 1 : 0
   repository = join("", aws_ecr_repository.default[*].name)
 
-  policy = <<EOF
+  ## A caller-supplied policy wins outright. The generated one below covers the
+  ## common case and cannot express the two selections ECR offers that matter
+  ## most to anything pinning a digest: sinceImagePushed, and tagPrefixList.
+  policy = var.lifecycle_policy != null ? var.lifecycle_policy : <<EOF
 {
   "rules": [
     {
