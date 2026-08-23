@@ -141,3 +141,24 @@ variable "public_repository_catalog_data" {
   type        = any
   default     = {}
 }
+
+variable "lifecycle_policy" {
+  type        = string
+  default     = null
+  description = <<-EOT
+    Complete ECR lifecycle policy as JSON. When set it replaces the generated
+    policy entirely, and max_image_count and max_untagged_image_count are
+    ignored.
+
+    The generated policy expires by image COUNT, which suits a consumer that
+    pulls by tag: a Kubernetes rollout re-resolves the tag, so an image rotating
+    out harms nothing. It is wrong for a consumer that pins a DIGEST, such as a
+    Lambda function or an admission controller that resolves tags at deploy
+    time. Those stay on one exact image until redeployed, so enough newer pushes
+    will delete the image still in use, and the failure appears later on a cold
+    start with nothing connecting it to the push that caused it.
+
+    ECR supports sinceImagePushed and tagPrefixList selections that express this
+    correctly; neither is reachable through the two count inputs.
+  EOT
+}
