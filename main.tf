@@ -28,7 +28,7 @@ module "labels" {
 
 # Module      : ECR  REPOSITORY
 # Description : Provides an Elastic Container Registry Repository.
-
+data "aws_caller_identity" "current" {}
 ################################################################################
 # Private Repository
 ################################################################################
@@ -249,4 +249,41 @@ resource "aws_ecr_repository_policy" "public" {
 
 data "aws_iam_policy_document" "empty" {
   count = var.enable ? 1 : 0
+}
+
+resource "aws_ecr_replication_configuration" "default" {
+  count = var.enable && var.enable_replication && length(var.replication_regions) > 0 ? 1 : 0
+
+  replication_configuration {
+    rule {
+      dynamic "destination" {
+        for_each = var.replication_regions
+        content {
+          region      = destination.value
+          registry_id = data.aws_caller_identity.current.account_id
+        }
+      }
+    }
+  }
+}
+
+resource "aws_ecr_registry_scanning_configuration" "default" {
+  count     = var.enable && var.enable_enhanced_scanning ? 1 : 0
+  scan_type = "ENHANCED"
+
+  rule {
+    scan_frequency = "CONTINUOUS_SCAN"
+    repository_filter {
+      filter      = "*"
+      filter_type = "WILDCARD"
+    }
+  }
+}
+
+resource "aws_ecr_pull_through_cache_rule" "default" {
+  for_each = var.enable ? var.pull_through_cache_rules : {}
+
+  ecr_repository_prefix = each.key
+  upstream_registry_url = each.value.upstream_registry_url
+  credential_arn        = each.value.credential_arn
 }
