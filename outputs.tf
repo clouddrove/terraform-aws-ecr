@@ -25,3 +25,13 @@ output "tags" {
   value       = module.labels.tags
   description = "A mapping of tags to assign to the resource."
 }
+
+output "pull_through_cache_rule_ids" {
+  value       = { for k, rule in aws_ecr_pull_through_cache_rule.default : k => rule.id }
+  description = "Map of created pull-through cache rule IDs."
+}
+
+output "replication_registry_id" {
+  value       = try(aws_ecr_replication_configuration.default[0].registry_id, null)
+  description = "The registry ID where replication configuration is applied."
+}

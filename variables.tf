@@ -162,3 +162,43 @@ variable "lifecycle_policy" {
     correctly; neither is reachable through the two count inputs.
   EOT
 }
+
+variable "enable_replication" {
+  type        = bool
+  default     = false
+  description = "Enable cross-region or cross-account replication for ECR."
+}
+
+variable "replication_regions" {
+  type        = list(string)
+  default     = []
+  description = "List of AWS regions to replicate images to when enable_replication is true."
+}
+
+variable "enable_enhanced_scanning" {
+  type        = bool
+  default     = false
+  description = "Enable registry-level enhanced scanning via Amazon Inspector."
+}
+
+variable "pull_through_cache_rules" {
+  type = map(object({
+    upstream_registry_url = string
+    credential_arn        = optional(string, null)
+  }))
+  default     = {}
+  description = "Map of ECR repository prefixes to upstream registry configurations (URL and optional Secrets Manager credential ARN)."
+}
+
+
+variable "enable_default_lifecycle_policy" {
+  type        = bool
+  default     = false
+  description = "Enable built-in lifecycle policy when a custom lifecycle_policy JSON is not provided."
+}
+
+variable "untagged_image_days" {
+  type        = number
+  default     = 7
+  description = "Number of days after which untagged images expire in the built-in lifecycle policy."
+}
